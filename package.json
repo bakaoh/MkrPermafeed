@@ -1,0 +1,19 @@
+{
+  "name": "mkrar",
+  "version": "1.0.0",
+  "description": "Add MakerDAO platform statistics to the Arweave network",
+  "main": "index.js",
+  "scripts": {
+    "test": "node mkrar --wallet-file PATH_TO_WALLET.json"
+  },
+  "author": "bakaoh",
+  "license": "GPL-2.0-only",
+  "bin": {
+    "mkrar": "mkrar"
+  },
+  "dependencies": {
+    "@makerdao/dai": "^0.22.0",
+    "arweave": "^1.5.3",
+    "yargs": "^15.0.1"
+  }
+}

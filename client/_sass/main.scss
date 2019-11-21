@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+.jqstooltip {
+  width: 48px !important;
+  height: 24px !important;
+}
+
+$primary: green;
+$card-header-background-color: green;
+$card-header-color: white;
+$card-content-padding: 1rem;
+
+@import "../node_modules/bulma/bulma";

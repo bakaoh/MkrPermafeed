@@ -34,34 +34,45 @@ async function archive() {
   await maker.authenticate();
   const price = maker.service("price");
   const ethCdp = maker.service("cdp");
+  const tokenService = maker.service("token");
+  const dai = tokenService.getToken(Maker.DAI);
 
   const [
     ethPrice,
     mkrPrice,
     pethPrice,
     wethToPeth,
-    collateralization
+    collateralization,
+    daiSupply
   ] = await Promise.all([
     price.getEthPrice(),
     price.getMkrPrice(),
     price.getPethPrice(),
     price.getWethToPethRatio(),
-    ethCdp.getSystemCollateralization()
+    ethCdp.getSystemCollateralization(),
+    dai.totalSupply()
   ]);
 
+  const now = new Date();
   const data = JSON.stringify({
-    utc: new Date().toUTCString(),
+    utc: now.toUTCString(),
     ethPrice: ethPrice.toString(),
     mkrPrice: mkrPrice.toString(),
     pethPrice: pethPrice.toString(),
+    daiSupply: daiSupply.toString(),
     wethToPeth,
     collateralization
   });
   console.log(`Data: ${data}`);
 
+  let date = now.toISOString().split("T")[0];
+  let hour = now.getHours();
+
   let tx = await arweave.createTransaction({ data }, wallet);
   tx.addTag("Content-Type", "application/json");
   tx.addTag("Stream-Name", "mkr");
+  tx.addTag("Date", date);
+  tx.addTag("Hour", hour.toString());
   await dispatchTX(tx);
 }
 
@@ -81,6 +92,13 @@ async function dispatchTX(tx) {
 }
 
 module.exports = async function run() {
+  if (new Date().getMinutes() !== 0) {
+    console.error(
+      `Current minutes is ${new Date().getMinutes()}, not running.`
+    );
+    process.exit();
+  }
+
   const address = await arweave.wallets.jwkToAddress(wallet);
   let balance = arweave.ar.winstonToAr(
     await arweave.wallets.getBalance(address)
@@ -90,4 +108,4 @@ module.exports = async function run() {
   archive()
     .catch(err => console.error(err))
     .finally(() => process.exit());
-}
+};

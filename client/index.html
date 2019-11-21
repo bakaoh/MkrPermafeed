@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MakerDAO Permafeed</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+  <section class="hero is-medium is-primary">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-8-desktop is-offset-2-desktop">
+            <h1 class="title is-2 is-spaced">
+              MakerDAO Permafeed
+            </h1>
+            <h2 class="subtitle is-4">
+              Track <strong>MakerDAO</strong> platform data statistics.
+              Stats are pulled directly from the Ethereum blockchain and stored in <strong>Arweave</strong> for faster
+              historical querying.
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-8-desktop is-offset-2-desktop">
+          <div class="content">
+            <h3>What's included</h3>
+            <p>
+              Data is archived from address <code>nSe8ZKhDu3v4CH0GFiZXzVWA1clYrT2_R46ApDtu2TA</code>
+            </p>
+            <p>
+              hourly in <code>Json</code> format:
+            </p>
+            <pre><code>{
+  "utc": "Fri, 22 Nov 2019 01:21:49 GMT",
+  "ethPrice": "161.07 USD/ETH",
+  "mkrPrice": "529.41 USD/MKR",
+  "pethPrice": "168.54 USD/PETH",
+  "daiSupply": "92146643.42 DAI",
+  "wethToPeth": 1.0464370394605356,
+  "collateralization": 3.015935426996438
+}</code></pre>
+            <table class="table is-bordered is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Unit</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th><code>utc</code></th>
+                  <td>Time in UTC</td>
+                  <td></td>
+                  <td>Fri, 22 Nov 2019 01:21:49 GMT</td>
+                </tr>
+                <tr>
+                  <th><code>ethPrice</code></th>
+                  <td>ETH Price</td>
+                  <td>USD/ETH</td>
+                  <td>161.02 USD/ETH</td>
+                </tr>
+                <tr>
+                  <th><code>mkrPrice</code></th>
+                  <td>MKR Price</td>
+                  <td>USD/MKR</td>
+                  <td>529.41 USD/MKR</td>
+                </tr>
+                <tr>
+                  <th><code>pethPrice</code></th>
+                  <td>PETH Price</td>
+                  <td>USD/PETH</td>
+                  <td>168.50 USD/PETH</td>
+                </tr>
+                <tr>
+                  <th><code>daiSupply</code></th>
+                  <td>DAI Supply</td>
+                  <td>DAI</td>
+                  <td>92146643.42 DAI</td>
+                </tr>
+                <tr>
+                  <th><code>wethToPeth</code></th>
+                  <td>WETH To PETH ratio</td>
+                  <td></td>
+                  <td>1.0464370394605356</td>
+                </tr>
+                <tr>
+                  <th><code>collateralization</code></th>
+                  <td>Collateralization</td>
+                  <td></td>
+                  <td>3.015092803867795</td>
+                </tr>
+              </tbody>
+            </table>
+            <br>
+            <p>
+              Each data point is also attached to these tags:
+            </p>
+            <ul>
+              <li>
+                <code>Stream-Name</code> is always <code>mkr</code>, use to search for all transactions in the stream.
+              </li>
+              <li>
+                <code>Date</code> in <code>YYYY-MM-DD</code> format, use to search data points by date.
+              </li>
+              <li>
+                <code>Hour</code> in <code>hh</code> format, use to chart by 1h, 3h, 1D...
+              </li>
+            </ul>
+            <h3><a name="demo">Demo Graph</a></h3>
+            <p>
+              Below graphs get data directly from <strong>Arweave</strong>, don't use any centralize dabatase
+            </p>
+            <div class="container">
+              <div class="columns">
+
+                <div class="column is-4-desktop">
+                  <div class="card">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        ETH Price
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <span id="sparkline-1"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4-desktop">
+                  <div class="card">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        MKR Price
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <span id="sparkline-2"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4-desktop">
+                  <div class="card">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        PETH Price
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <span id="sparkline-3"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="columns">
+                <div class="column is-4-desktop">
+                  <div class="card">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        WETH To PETH ratio
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <span id="sparkline-4"></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="column is-4-desktop">
+                  <div class="card">
+                    <header class="card-header">
+                      <p class="card-header-title">
+                        Collateralization
+                      </p>
+                    </header>
+                    <div class="card-content">
+                      <span id="sparkline-5"></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3>ArQL Example</h3>
+            <ol>
+              <li>
+                <p>
+                  Get all data point:
+                  <br>
+                  <pre><code>{
+  op: "and",
+  expr1: {
+    op: "equals",
+    expr1: "from",
+    expr2: "nSe8ZKhDu3v4CH0GFiZXzVWA1clYrT2_R46ApDtu2TA"
+  },
+  expr2: {
+    op: "equals",
+    expr1: "Stream-Name",
+    expr2: "mkr"
+  }
+}</code></pre>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Get data points by date <code>2019-11-22</code>:
+                  <br>
+                  <pre><code>{
+  op: "and",
+  expr1: {
+    op: "equals",
+    expr1: "from",
+    expr2: "nSe8ZKhDu3v4CH0GFiZXzVWA1clYrT2_R46ApDtu2TA"
+  },
+  expr2: {
+    op: "and",
+    expr1: {
+      op: "equals",
+      expr1: "Date",
+      expr2: "2019-11-22"
+    },
+    expr2: {
+      op: "equals",
+      expr1: "Stream-Name",
+      expr2: "mkr"
+    }
+  }
+}</code></pre>
+                </p>
+              </li>
+              <li>
+                <p>
+                  Get data daily at <code>00:00 AM</code>:
+                  <br>
+                  <pre><code>{
+  op: "and",
+  expr1: {
+    op: "equals",
+    expr1: "from",
+    expr2: "nSe8ZKhDu3v4CH0GFiZXzVWA1clYrT2_R46ApDtu2TA"
+  },
+  expr2: {
+    op: "and",
+    expr1: {
+      op: "equals",
+      expr1: "Hour",
+      expr2: "0"
+    },
+    expr2: {
+      op: "equals",
+      expr1: "Stream-Name",
+      expr2: "mkr"
+    }
+  }
+}</code></pre>
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer class="footer has-text-centered">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-8-desktop is-offset-2-desktop">
+          <p>
+            <small>
+              Source code licensed <a href="http://opensource.org/licenses/mit-license.php">MIT</a>
+            </small>
+          </p>
+          <p style="margin-top: 1rem;">
+            <a href="http://bulma.io">
+              <img src="made-with-bulma.png" alt="Made with Bulma" width="128" height="24">
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+  <script type="text/javascript" src="lib/main.js"></script>
+</body>
+
+</html>
